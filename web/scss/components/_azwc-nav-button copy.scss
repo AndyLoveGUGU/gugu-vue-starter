@@ -1,0 +1,142 @@
+// :root{
+//   --azwc-nav-button-line-width: 2rem;
+//   --azwc-nav-button-line-border-radius: calc(var(--azwc-nav-button-line-width) / 16);
+//   --azwc-nav-button-border-radius: 50%;
+//   --azwc-nav-button-duration: .5s;
+//   --azwc-nav-button-toggled-size: 1; // .75;
+//   --azwc-nav-button-toggled-btn-bg: #274380;
+//   --azwc-nav-button-toggled-content-bg: #FFF;
+
+//   --azwc-nav-button-size: calc(var(--azwc-nav-button-line-width) * 1.8);
+//   --azwc-nav-button-line-height: calc(var(--azwc-nav-button-line-width) / 8);
+//   --azwc-nav-button-padding-left: calc((var(--azwc-nav-button-size) - var(--azwc-nav-button-line-width)) / 2);
+//   --azwc-nav-button-padding-top: calc((var(--azwc-nav-button-size) - var(--azwc-nav-button-line-height)) / 2);
+// }
+
+azwc-nav-button:not(.hydrated) {
+  visibility: hidden;
+}
+
+azwc-nav-button {
+  /* Smoother animations */
+  & *,
+  & *:before,
+  & *:after {
+   transform: translate3d(0,0,0);
+  }
+
+  width: var(--azwc-nav-button-size);
+  height: var(--azwc-nav-button-size);
+  display: inline-block;
+  background-color: var(--azwc-nav-button-toggled-btn-bg);
+  border-radius: var(--azwc-nav-button-border-radius);
+}
+
+// ===================
+
+.navicon-button {
+  display: inline-block;
+  position: relative;
+  padding: var(--azwc-nav-button-padding-top) var(--azwc-nav-button-padding-left);
+  transition: calc(var(--azwc-nav-button-duration) / 2);
+  cursor: pointer;
+  user-select: none;
+  opacity: 1; // .8;
+
+  .navicon:before, .navicon:after {
+    transition: calc(var(--azwc-nav-button-duration) / 2);
+  }
+
+  &:hover {
+    transition: var(--azwc-nav-button-duration);
+    opacity: 1;
+
+    .navicon:before, .navicon:after {
+      transition: calc(var(--azwc-nav-button-duration) / 2);
+    }
+
+    .navicon:before { top: calc(var(--azwc-nav-button-line-height) * 2.64); }
+    .navicon:after { top: calc(var(--azwc-nav-button-line-height) * -2.64); }
+  }
+}
+
+.navicon {
+  position: relative;
+  width: var(--azwc-nav-button-line-width);
+  height: var(--azwc-nav-button-line-height);
+  background: var(--azwc-nav-button-toggled-content-bg);
+  transition: var(--azwc-nav-button-duration);
+  border-radius: var(--azwc-nav-button-line-border-radius);
+
+  &:before, &:after {
+    display: block;
+    content: "";
+    width: var(--azwc-nav-button-line-width);
+    height: var(--azwc-nav-button-line-height);
+    background: var(--azwc-nav-button-toggled-content-bg);
+    position: absolute;
+    z-index: -1;
+    transition: var(--azwc-nav-button-duration) calc(var(--azwc-nav-button-duration) / 2);
+    border-radius: var(--azwc-nav-button-line-border-radius);
+  }
+
+  &:before { top: calc(var(--azwc-nav-button-line-height) * 2); }
+  &:after { top: calc(var(--azwc-nav-button-line-height) * -2); }
+}
+
+.open:not(.steps) .navicon:before,
+.open:not(.steps) .navicon:after {
+  top: 0 !important;
+}
+
+.open .navicon:before,
+.open .navicon:after {
+  transition: var(--azwc-nav-button-duration);
+}
+
+/* Minus */
+.open { transform: scale(var(--azwc-nav-button-toggled-size)); }
+
+/* Arrows */
+.open.larr .navicon,
+.open.rarr .navicon,
+.open.uarr .navicon {
+    &:before, &:after {
+      width: calc(var(--azwc-nav-button-line-width) * 0.6);
+    }
+
+    &:before { transform: rotate(35deg); transform-origin: left top; }
+    &:after { transform: rotate(-35deg); transform-origin: left bottom; }
+}
+.open.uarr { transform: scale(var(--azwc-nav-button-toggled-size)) rotate(90deg); }
+.open.darr .navicon {
+  &:before, &:after {
+    width: calc(var(--azwc-nav-button-line-width) * 0.6);
+  }
+
+  &:before { transform: rotate(35deg); transform-origin: left top; }
+  &:after { transform: rotate(-35deg); transform-origin: left bottom; }
+}
+.open.darr { transform: scale(var(--azwc-nav-button-toggled-size)) rotate(-90deg); }
+
+
+
+/* Arrows */
+.open.rarr .navicon {
+  &:before { transform: translate3d(calc(var(--azwc-nav-button-line-width) * 0.4),0,0) rotate(-35deg); transform-origin: right top; }
+  &:after { transform: translate3d(calc(var(--azwc-nav-button-line-width) * 0.4),0,0) rotate(35deg); transform-origin: right bottom; }
+}
+
+/* × and + */
+.open.plus,
+.open.x {
+  .navicon {
+    background: transparent;
+
+    &:before { transform: rotate(-45deg); }
+    &:after { transform: rotate(45deg); }
+  }
+}
+.open.plus { 
+  transform: scale(var(--azwc-nav-button-toggled-size)) rotate(45deg) 
+}

@@ -1,0 +1,57 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass mixins.
+// -----------------------------------------------------------------------------
+
+/// Event wrapper
+/// @author Harry Roberts
+/// @param {Bool} $self [false] - Whether or not to include current selector
+/// @link https://twitter.com/csswizardry/status/478938530342006784 Original tweet from Harry Roberts
+@mixin on-event($self: false) {
+  @if $self {
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+      @content;
+    }
+  } @else {
+    &:hover,
+    &:active,
+    &:focus {
+      @content;
+    }
+  }
+}
+
+/// Make a context based selector a little more friendly
+/// @author Kitty Giraudel
+/// @param {String} $context
+@mixin when-inside($context) {
+  #{$context} & {
+    @content;
+  }
+}
+
+@mixin above-bt($bp) {
+  @media (min-width: map-get($breakpoints, $bp)) {
+    @content;
+  }
+}
+
+@mixin below-bt($bp) {
+  @media (max-width: map-get($breakpoints, $bp) - 1px) {
+    @content;
+  }
+}
+
+@mixin between-bts($bp1, $bp2) {
+  @media (min-width: map-get($breakpoints, $bp1)) and (max-width: map-get($breakpoints, $bp2) - 1px) {
+    @content;
+  }
+}
+
+// .hello {
+//   @include between-bts('small', 'max') {
+//     display: none;
+//   }
+// }
