@@ -35,7 +35,7 @@ module.exports = ({ mode }) => ({
   },
   output: {
     // path: path.resolve(frontEndJsPublicFolder),
-    path: path.resolve(__dirname, '../', 'dist'),
+    path: path.resolve('dist'),
     pathinfo: mode === 'development',
     filename: baseFolderName + '/js/[name].js',
     publicPath: '/',
@@ -46,14 +46,14 @@ module.exports = ({ mode }) => ({
         ? path.resolve('node_modules', 'vue/dist/vue.js')
         : path.resolve('node_modules', 'vue/dist/vue.min.js'),
     },
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    extensions: ['.js', '.ts'],
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx|ts|tsx)$/,
         include: [
-          path.resolve(__dirname, '../', 'web')
+          path.resolve('web')
         ],
         use: [{
           loader: 'babel-loader',
